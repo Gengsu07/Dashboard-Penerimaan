@@ -5,6 +5,7 @@ from socket import inet_aton
 from tokenize import group
 from turtle import color, down, width
 from matplotlib.cbook import safe_masked_invalid
+from matplotlib.pyplot import title
 from matplotlib.style import use
 from requests import head
 import streamlit as st
@@ -139,11 +140,15 @@ if selected == "Home":
     datapie = ppmpkm2022('select "SEKSI","NAMA_AR", nominal from public.ppmpkm2022 where extract (month from datebayar) = extract(month from current_date)').groupby(
         ['SEKSI','NAMA_AR']).sum().reset_index()
     seksi_pie = px.pie(datapie, names= 'SEKSI', values='nominal',color_discrete_sequence=px.colors.qualitative.Pastel)
+    seksi_pie.update_layout(showlegend=False)
     with col2:
         st.plotly_chart(seksi_pie, use_container_width=True)
         
     databar = px.bar(datapie, x='NAMA_AR', y='nominal',color='SEKSI', width=960,color_discrete_sequence=px.colors.qualitative.Pastel)   
     databar.update_layout({'plot_bgcolor':'rgba(0,0,0,0)'})
+    databar.update_layout(showlegend=False)
+    databar.update_yaxes(title=None)
+    databar.update_xaxes(title=None)
     with col1:
         st.plotly_chart(databar,use_container_width=True)
     
@@ -153,7 +158,7 @@ if selected == "Home":
     perseksi = ppmpkm2022('select "SEKSI", nominal from public.ppmpkm2022').groupby('SEKSI').sum().reset_index()
     perseksi_bar = px.bar(perseksi,y='nominal',x='SEKSI',text_auto=',.0f')
     perseksi_bar.update_layout(
-        {'showlegend' : True,'plot_bgcolor':'rgba(0, 0, 0,0)','paper_bgcolor': 'rgba(0, 0, 0,0)',
+        {'showlegend' : False,'plot_bgcolor':'rgba(0, 0, 0,0)','paper_bgcolor': 'rgba(0, 0, 0,0)',
          'margin_t':1 ,'margin_l':1, 'xaxis_title':None, 'yaxis_title':None
          })
     perseksi_bar.update_traces(textposition='inside')
@@ -358,8 +363,8 @@ elif selected == 'Eksplor Data Penerimaan':
     datatren = datatren.sort_values('bulan',ascending=True)
     trendline = px.line(datatren, x='bulan', y='jumlah' ,color='tahun',height=640)
     trendline.update_layout(plot_bgcolor='#3F4E4F')
-    trendline.update_xaxes(showgrid=False)
-    trendline.update_xaxes(nticks=12)
+    trendline.update_xaxes(showgrid=False,nticks=12)
+    trendline.update_yaxes(showgrid = True, gridwidth =1, gridcolor='white', title=None)
     
     st.plotly_chart(trendline, use_container_width=True)
         
