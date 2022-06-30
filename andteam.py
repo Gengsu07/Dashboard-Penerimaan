@@ -86,6 +86,7 @@ def monitoring(x):
 #SQL KPI
 #bruto2022 = ppmpkm2022("select sum(p.nominal) from ppmpkm2022 p where p.ket != 'SPMKP'")['nominal'].sum()
 bruto2022 = pd.read_sql("select sum(p.nominal) as nominal from ppmpkm2022 p where p.ket != 'SPMKP'",con=psql_conn)['nominal'].sum()
+bruto2022 = bruto2022/1000000000000
 spmkp2022 = pd.read_sql("select sum(p.nominal) as nominal from ppmpkm2022 p where p.ket = 'SPMKP'",con=psql_conn)['nominal'].sum()
 netto2022 = pd.read_sql("select sum(p.nominal) as nominal from ppmpkm2022 p",con=psql_conn)['nominal'].sum()
 capaian = (netto2022/7500106372000)*100
@@ -110,24 +111,17 @@ if selected == "Home":
     colkpi1,colkpi2,colkpi3,colkpi4 = st.columns([2,2,2,1])
     with colkpi1:
         st.subheader('Bruto')
-        st.metric(label='s.d Sekarang', value='{} T'.format(
-            str(bruto2022/1000000000000)[:5]
-            )
+        st.metric(label='s.d Sekarang', value='{:,.2f} T'.format(bruto2022)
         )
-        st.metric(label = 'Bulan ini', value= '{} M'.format(str(bruto_bulanini/1000000000)[:3]))
+        st.metric(label = 'Bulan ini', value= '{:,.2f} M'.format(bruto_bulanini/1000000000))
     with colkpi2:
         st.subheader('SPMKP')
-        st.metric(label='s.d Sekarang', value='{} T'.format(
-            str(spmkp2022/1000000000000)[:5]
-            )
-        )
-        st.metric(label= 'Bulan ini', value= '{} M'.format(str(spmkp_bulanini/1000000000)[:3]))
+        st.metric(label='s.d Sekarang', value='{:,.2f} T'.format(spmkp2022/1000000000000))
+        st.metric(label= 'Bulan ini', value= '{:,.2f} M'.format(spmkp_bulanini/1000000000))
     with colkpi3:
         st.subheader('NETTO')
-        st.metric(label='s.d Sekarang', value='{} T'.format(
-            str(netto2022/1000000000000)[:5])
-        )
-        st.metric(label='Bulan ini', value='{} M'.format(str(netto_bulanini/1000000000)[:3]))
+        st.metric(label='s.d Sekarang', value='{:,.2f} T'.format(netto2022/1000000000000))
+        st.metric(label='Bulan ini', value='{:,.2f} M'.format(netto_bulanini/1000000000))
     with colkpi4:
         #st.write(capaian)
         #st.write(tgl_mpn)
