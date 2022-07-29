@@ -89,7 +89,7 @@ bruto2022 = pd.read_sql("select sum(p.nominal) as nominal from ppmpkm2022 p wher
 bruto2022 = bruto2022/1000000000000
 spmkp2022 = pd.read_sql("select sum(p.nominal) as nominal from ppmpkm2022 p where p.ket = 'SPMKP'",con=psql_conn)['nominal'].sum()
 netto2022 = pd.read_sql("select sum(p.nominal) as nominal from ppmpkm2022 p",con=psql_conn)['nominal'].sum()
-capaian = (netto2022/7500106372000)*100
+capaian = (netto2022/8411473360000)*100
 
 #BULAN INI
 bruto_bulanini = ppmpkm2022('''select sum(nominal) as jumlah from ppmpkm2022
