@@ -4,7 +4,8 @@ import imp
 from socket import inet_aton
 from tokenize import group
 from turtle import color, down, width
-from matplotlib.cbook import safe_masked_invalid
+import matplotlib
+#from matplotlib.cbook import safe_masked_invalid
 #from matplotlib.pyplot import title
 #from matplotlib.style import use
 from requests import head
