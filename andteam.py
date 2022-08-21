@@ -1,12 +1,12 @@
 from email.policy import default
 import imp
-from msilib import schema
+#from msilib import schema
 from socket import inet_aton
 from tokenize import group
 from turtle import color, down, width
 from matplotlib.cbook import safe_masked_invalid
-from matplotlib.pyplot import title
-from matplotlib.style import use
+#from matplotlib.pyplot import title
+#from matplotlib.style import use
 from requests import head
 import streamlit as st
 import pandas as pd
@@ -16,8 +16,6 @@ import plotly.express as px
 from chart_studio import plotly
 import sqlalchemy
 from sqlalchemy import column, create_engine, true, values
-import mysql.connector as mysql
-from pyspark.sql import SparkSession
 import streamlit.components.v1 as components
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
@@ -61,8 +59,9 @@ selected = option_menu(None, ["Home","Eksplor Data Penerimaan","Bank Data", "Too
     }
 )
 
-db_conn = mysql.connect(host = '10.4.19.215', user = 'sugengw07', password= 'sgwi2341',
-        database = 'mpninfo',port = '3306')
+#db_conn = mysql.connect(host = '10.4.19.215', user = 'sugengw07', password= 'sgwi2341',
+        #database = 'mpninfo',port = '3306')
+db_conn = create_engine('mysql://sugengw07:sgwi2341@10.4.19.215/mpninfo')
 
 psql_conn = create_engine('postgresql://postgres:sgwi2341@10.4.19.215/penerimaan')
 mon_conn = create_engine('postgresql://postgres:sgwi2341@10.4.19.215/monitoring')
@@ -203,8 +202,7 @@ elif selected=='Bank Data':
     jenis_data = ['Penerimaan', 'Monitoring/Sanding Data']
     data_menu = st.selectbox('Jenis Data',jenis_data,index=0)
     if data_menu =='Penerimaan':
-        # laporan = pd.read_sql("select table_name as tabel from information_schema.tables where table_schema ='laporan'",
-        #                     con=psql_conn).tabel.tolist()
+        
         tabel = ['ppmpkm2022','laporan.existing_ppmpkm2022','laporan.mpn2021']
         
         tabel_selected = st.selectbox('Pilih Tabel yang akan dilihat',tabel)
@@ -422,9 +420,7 @@ elif selected == 'Eksplor Data Penerimaan':
     st.table(data_matrix)
     
     st.markdown("""<hr style="height:3px;border:none;color:#FFFFFF;background-color:#ffc91b;" /> """, unsafe_allow_html=True)
-    # kolom = ppmpkm2022.columns.tolist()
-    # kolom.remove('jumlah')
-    # ppmpkm2022 = ppmpkm2022.groupby(kolom).sum().reset_index()
+   
     colkdmap, colkdbayar = st.columns([1,1])
     with colkdmap:
         st.table(data_map)  
