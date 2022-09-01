@@ -62,7 +62,7 @@ selected = option_menu(None, ["Home","Eksplor Data Penerimaan","Bank Data", "Too
 
 #db_conn = mysql.connect(host = '10.4.19.215', user = 'sugengw07', password= 'sgwi2341',
         #database = 'mpninfo',port = '3306')
-db_conn = create_engine('mysql://sugengw07:sgwi2341@10.4.19.215/mpninfo')
+#db_conn = create_engine('mysql+pymysql://sugengw07:sgwi2341@10.4.19.215/mpninfo')
 
 psql_conn = create_engine('postgresql://postgres:sgwi2341@10.4.19.215/penerimaan')
 mon_conn = create_engine('postgresql://postgres:sgwi2341@10.4.19.215/monitoring')

@@ -4,7 +4,7 @@
 # WORKDIR "C:\Program` Files\APPS"
 
 
-FROM python:latest
+FROM python:3.8-bullseye
 
 RUN mkdir APPS
 WORKDIR /APPS
